@@ -1,0 +1,98 @@
+﻿@using OnlineShoppingStore.Models.Home;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MainLayout.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/css/fontawesome.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/fontawesome.min.css" />
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="logo">
+                    <h1> <i class="fa fa-mobile" aria-hidden="true"></i> <a href="@Url.Action("Index", "Home" )"> GSM <span>Shop</span></a> </h1>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Cart <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            @if (Session["cart"] != null)
+                            {
+                                foreach (var item in (List<Item>)Session["cart"])
+                                {
+                                    <li><a href="@Url.Action("RemoveFromCart","Home", new { productId= item.Product.ProductId})">
+                                        @item.Product.ProductName (@item.Quantity) <i class="fa fa-times"> </i> </a>
+                            </li>
+                                }
+                            }
+                           
+                            
+
+                            <li class="divider"></li>
+                            <li><a href="@Url.Action("Checkout", "Home" )">Checkout</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="navbar-right"> <a style="border-radius:inherit" href="@Url.Action("Index", "Register" )"> Login/Register </a></li>
+                   
+                </ul>
+            </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-menus">
+                        <ul class="nav nav-pills">
+                            <li class="active"> <a style="border-radius:inherit" href="@Url.Action("Index", "Home" )"> Home </a></li>
+                            <li class="navbar-right"> <a style="border-radius:inherit" href="@Url.Action("Contact", "Home" )" > About </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="row">
+                <div class="col-md-12 copyright">
+                    <div class="col-md-6 col-sm-6 copyright-left">
+                        <p>&copy; @DateTime.Now.Year -SmartphoneShoppingStore. All right reserved.</p>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 copyright-right">
+                        <ul class="list-unstyled list-social" >
+                            <li><a href="https://facebook.com" targer="_blank"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="https://twitter.com" targer="_blank"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" targer="_blank"><i class="fa fa-google-plus" style="font-size:18px"></i></a></li>
+                            @*<li><a href="#" targer="_blank"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#" targer="_blank"><i class="fa fa-facebook-square"></i></a></li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

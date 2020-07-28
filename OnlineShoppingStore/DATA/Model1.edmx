@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbSmartphoneShoppingStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SiteUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsValid" Type="bit" />
+        </EntityType>
+        <EntityType Name="Table_Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="CartStatusId" Type="int" />
+        </EntityType>
+        <EntityType Name="Table_CartStatus">
+          <Key>
+            <PropertyRef Name="CartStatusId" />
+          </Key>
+          <Property Name="CartStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CartStatus" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Table_Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="Table_MemberRole">
+          <Key>
+            <PropertyRef Name="MemberRoleID" />
+          </Key>
+          <Property Name="MemberRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="memberId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Table_Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="200" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" />
+          <Property Name="EmailId" Type="varchar" MaxLength="200" />
+          <Property Name="Password" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Table_Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="500" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ProductImage" Type="varchar(max)" />
+          <Property Name="IsFeatured" Type="bit" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Table_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Table_ShippingDetails">
+          <Key>
+            <PropertyRef Name="ShippingDetailId" />
+          </Key>
+          <Property Name="ShippingDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="Adress" Type="varchar" MaxLength="500" />
+          <Property Name="City" Type="varchar" MaxLength="500" />
+          <Property Name="State" Type="varchar" MaxLength="500" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="50" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="AmountPaid" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Table_SlideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlideTitle" Type="varchar" MaxLength="500" />
+          <Property Name="SlideImage" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__Table_Car__Produ__22AA2996">
+          <End Role="Table_Product" Type="Self.Table_Product" Multiplicity="0..1" />
+          <End Role="Table_Cart" Type="Self.Table_Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Table_Cart">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Table_Pro__Categ__145C0A3F">
+          <End Role="Table_Category" Type="Self.Table_Category" Multiplicity="0..1" />
+          <End Role="Table_Product" Type="Self.Table_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Table_Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Table_Shi__Payme__1CF15040">
+          <End Role="Table_Members" Type="Self.Table_Members" Multiplicity="0..1" />
+          <End Role="Table_ShippingDetails" Type="Self.Table_ShippingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Table_ShippingDetails">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbSmartphoneShoppingStoreModelStoreContainer">
+          <EntitySet Name="SiteUser" EntityType="Self.SiteUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Cart" EntityType="Self.Table_Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_CartStatus" EntityType="Self.Table_CartStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Category" EntityType="Self.Table_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_MemberRole" EntityType="Self.Table_MemberRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Members" EntityType="Self.Table_Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Product" EntityType="Self.Table_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Roles" EntityType="Self.Table_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_ShippingDetails" EntityType="Self.Table_ShippingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_SlideImage" EntityType="Self.Table_SlideImage" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Table_Car__Produ__22AA2996" Association="Self.FK__Table_Car__Produ__22AA2996">
+            <End Role="Table_Product" EntitySet="Table_Product" />
+            <End Role="Table_Cart" EntitySet="Table_Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Table_Pro__Categ__145C0A3F" Association="Self.FK__Table_Pro__Categ__145C0A3F">
+            <End Role="Table_Category" EntitySet="Table_Category" />
+            <End Role="Table_Product" EntitySet="Table_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Table_Shi__Payme__1CF15040" Association="Self.FK__Table_Shi__Payme__1CF15040">
+            <End Role="Table_Members" EntitySet="Table_Members" />
+            <End Role="Table_ShippingDetails" EntitySet="Table_ShippingDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbSmartphoneShoppingStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Table_Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="CartStatusId" Type="Int32" />
+          <NavigationProperty Name="Table_Product" Relationship="dbSmartphoneShoppingStoreModel.FK__Table_Car__Produ__22AA2996" FromRole="Table_Cart" ToRole="Table_Product" />
+        </EntityType>
+        <EntityType Name="Table_CartStatus">
+          <Key>
+            <PropertyRef Name="CartStatusId" />
+          </Key>
+          <Property Name="CartStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartStatus" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Table_Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="Table_Product" Relationship="dbSmartphoneShoppingStoreModel.FK__Table_Pro__Categ__145C0A3F" FromRole="Table_Category" ToRole="Table_Product" />
+        </EntityType>
+        <EntityType Name="Table_MemberRole">
+          <Key>
+            <PropertyRef Name="MemberRoleID" />
+          </Key>
+          <Property Name="MemberRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="memberId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Table_Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Table_ShippingDetails" Relationship="Self.FK__Table_Shi__Payme__1CF15040" FromRole="Table_Members" ToRole="Table_ShippingDetails" />
+        </EntityType>
+        <EntityType Name="Table_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Table_ShippingDetails">
+          <Key>
+            <PropertyRef Name="ShippingDetailId" />
+          </Key>
+          <Property Name="ShippingDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="Adress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="AmountPaid" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Table_Members" Relationship="Self.FK__Table_Shi__Payme__1CF15040" FromRole="Table_ShippingDetails" ToRole="Table_Members" />
+        </EntityType>
+        <EntityType Name="Table_SlideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlideTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SlideImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Table_Shi__Payme__1CF15040">
+          <End Role="Table_Members" Type="Self.Table_Members" Multiplicity="0..1" />
+          <End Role="Table_ShippingDetails" Type="Self.Table_ShippingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Table_ShippingDetails">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbSmartphoneShoppingStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Table_Cart" EntityType="Self.Table_Cart" />
+          <EntitySet Name="Table_CartStatus" EntityType="Self.Table_CartStatus" />
+          <EntitySet Name="Table_Category" EntityType="Self.Table_Category" />
+          <EntitySet Name="Table_MemberRole" EntityType="Self.Table_MemberRole" />
+          <EntitySet Name="Table_Members" EntityType="Self.Table_Members" />
+          <EntitySet Name="Table_Roles" EntityType="Self.Table_Roles" />
+          <EntitySet Name="Table_ShippingDetails" EntityType="Self.Table_ShippingDetails" />
+          <EntitySet Name="Table_SlideImage" EntityType="Self.Table_SlideImage" />
+          <AssociationSet Name="FK__Table_Shi__Payme__1CF15040" Association="Self.FK__Table_Shi__Payme__1CF15040">
+            <End Role="Table_Members" EntitySet="Table_Members" />
+            <End Role="Table_ShippingDetails" EntitySet="Table_ShippingDetails" />
+          </AssociationSet>
+          <EntitySet Name="Table_Product" EntityType="dbSmartphoneShoppingStoreModel.Table_Product" />
+          <AssociationSet Name="FK__Table_Car__Produ__22AA2996" Association="dbSmartphoneShoppingStoreModel.FK__Table_Car__Produ__22AA2996">
+            <End Role="Table_Product" EntitySet="Table_Product" />
+            <End Role="Table_Cart" EntitySet="Table_Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Table_Pro__Categ__145C0A3F" Association="dbSmartphoneShoppingStoreModel.FK__Table_Pro__Categ__145C0A3F">
+            <End Role="Table_Category" EntitySet="Table_Category" />
+            <End Role="Table_Product" EntitySet="Table_Product" />
+          </AssociationSet>
+          <EntitySet Name="SiteUser" EntityType="dbSmartphoneShoppingStoreModel.SiteUser" />
+        </EntityContainer>
+        <EntityType Name="Table_Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsFeatured" Type="Boolean" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Table_Cart" Relationship="dbSmartphoneShoppingStoreModel.FK__Table_Car__Produ__22AA2996" FromRole="Table_Product" ToRole="Table_Cart" />
+          <NavigationProperty Name="Table_Category" Relationship="dbSmartphoneShoppingStoreModel.FK__Table_Pro__Categ__145C0A3F" FromRole="Table_Product" ToRole="Table_Category" />
+        </EntityType>
+        <Association Name="FK__Table_Car__Produ__22AA2996">
+          <End Type="dbSmartphoneShoppingStoreModel.Table_Product" Role="Table_Product" Multiplicity="0..1" />
+          <End Type="dbSmartphoneShoppingStoreModel.Table_Cart" Role="Table_Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Table_Cart">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Table_Pro__Categ__145C0A3F">
+          <End Type="dbSmartphoneShoppingStoreModel.Table_Category" Role="Table_Category" Multiplicity="0..1" />
+          <End Type="dbSmartphoneShoppingStoreModel.Table_Product" Role="Table_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Table_Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SiteUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbSmartphoneShoppingStoreModelStoreContainer" CdmEntityContainer="dbSmartphoneShoppingStoreEntities">
+          <EntitySetMapping Name="Table_Cart">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_Cart">
+              <MappingFragment StoreEntitySet="Table_Cart">
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_CartStatus">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_CartStatus">
+              <MappingFragment StoreEntitySet="Table_CartStatus">
+                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+                <ScalarProperty Name="CartStatus" ColumnName="CartStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Category">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_Category">
+              <MappingFragment StoreEntitySet="Table_Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_MemberRole">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_MemberRole">
+              <MappingFragment StoreEntitySet="Table_MemberRole">
+                <ScalarProperty Name="MemberRoleID" ColumnName="MemberRoleID" />
+                <ScalarProperty Name="memberId" ColumnName="memberId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Members">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_Members">
+              <MappingFragment StoreEntitySet="Table_Members">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Roles">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_Roles">
+              <MappingFragment StoreEntitySet="Table_Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_ShippingDetails">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_ShippingDetails">
+              <MappingFragment StoreEntitySet="Table_ShippingDetails">
+                <ScalarProperty Name="ShippingDetailId" ColumnName="ShippingDetailId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_SlideImage">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_SlideImage">
+              <MappingFragment StoreEntitySet="Table_SlideImage">
+                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
+                <ScalarProperty Name="SlideTitle" ColumnName="SlideTitle" />
+                <ScalarProperty Name="SlideImage" ColumnName="SlideImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Product">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.Table_Product">
+              <MappingFragment StoreEntitySet="Table_Product">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteUser">
+            <EntityTypeMapping TypeName="dbSmartphoneShoppingStoreModel.SiteUser">
+              <MappingFragment StoreEntitySet="SiteUser">
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
